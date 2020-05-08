@@ -31,7 +31,7 @@ def index():
     )
 
     response = requests.get('https://www.bukalapak.com/products', headers=headers, params=params)
-    return r.content
+    return response.content
 
 
 if __name__ == "__main__":
