@@ -62,9 +62,6 @@ def getShopee(keyword):
             data_to_write['review_count'] = review_count
             data_to_write['price'] = item['price'] / 100000
 
-            print('\t{}: '.format(str(total_count)) + data_to_write['url'])
-            total_count += 1
-
             result_data_list.append(data_to_write)
 
         return result_data_list
