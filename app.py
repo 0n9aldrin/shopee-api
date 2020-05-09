@@ -9,6 +9,7 @@ api = Api(app)
 parser = reqparse.RequestParser()
 
 def getShopee(keyword):
+        result_data_list = []
         headers = {
             'authority': 'shopee.co.id',
             'x-requested-with': 'XMLHttpRequest',
@@ -35,8 +36,38 @@ def getShopee(keyword):
         )
         
         resp = requests.get('https://shopee.co.id/api/v2/search_items/', headers=headers, params=params)
+        json_data = json.loads(resp.text)
+        items = json_data['items']
+        if not items:
+            break
+        for item in items:
+            images = item['images']
+            item_rating = item['item_rating']
 
-        return resp.text
+            shopid = item['shopid']
+            itemid = item['itemid']
+
+            review_count = 0
+            if 'rating_count' in item_rating.keys() and item_rating['rating_count']:
+                review_count = item_rating['rating_count'][0]
+
+            data_to_write = OrderedDict()
+            data_to_write['name'] = item['name'].strip()
+            data_to_write['url'] = 'https://shopee.co.id/' + item['name'].strip().replace(' ', '-') + '-power-i.{}.{}'.format(str(shopid), str(itemid))
+            if images:
+                data_to_write['image_url'] = 'https://cf.shopee.co.id/file/' + item['image']
+            else:
+                data_to_write['image_url'] = ''
+            data_to_write['rating'] = item_rating['rating_star']
+            data_to_write['review_count'] = review_count
+            data_to_write['price'] = item['price'] / 100000
+
+            print('\t{}: '.format(str(total_count)) + data_to_write['url'])
+            total_count += 1
+
+            result_data_list.append(data_to_write)
+
+        return result_data_list
 
 class StudentsList(Resource):
     def get(self):
