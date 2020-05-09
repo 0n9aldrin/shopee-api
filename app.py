@@ -38,8 +38,6 @@ def getShopee(keyword):
         resp = requests.get('https://shopee.co.id/api/v2/search_items/', headers=headers, params=params)
         json_data = json.loads(resp.text)
         items = json_data['items']
-        if not items:
-            break
         for item in items:
             images = item['images']
             item_rating = item['item_rating']
