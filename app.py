@@ -36,7 +36,7 @@ def getShopee(keyword):
         
         resp = requests.get('https://shopee.co.id/api/v2/search_items/', headers=headers, params=params)
 
-        return resp.content
+        return resp.text
 
 class StudentsList(Resource):
     def get(self):
