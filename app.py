@@ -8,8 +8,7 @@ api = Api(app)
 
 parser = reqparse.RequestParser()
 
-class StudentsList(Resource):
-    def getShopee(keyword):
+def getShopee(keyword):
         headers = {
             'authority': 'shopee.co.id',
             'x-requested-with': 'XMLHttpRequest',
@@ -38,6 +37,8 @@ class StudentsList(Resource):
         resp = requests.get('https://shopee.co.id/api/v2/search_items/', headers=headers, params=params)
 
         return resp.content
+
+class StudentsList(Resource):
     def get(self):
         parser.add_argument("keyword")
         args = parser.parse_args()
