@@ -41,7 +41,8 @@ def getShopee(keyword,page):
         json_data = json.loads(resp.text)
         items = json_data['items']
         data_write = OrderedDict()
-        data_write['total'] = json_data['total']
+        data_write['total'] = json_data['total_count']
+        result_data_list.append(data_write)
         for item in items:
             images = item['images']
             item_rating = item['item_rating']
