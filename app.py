@@ -30,8 +30,8 @@ def getShopee(keyword,page):
         params = (
             ('by', 'relevancy'),
             ('keyword', keyword),
-            ('limit', page),
-            ('newest', '0'),
+            ('limit', '50'),
+            ('newest', str(page)),
             ('order', 'desc'),
             ('page_type', 'search'),
             ('version', '2'),
