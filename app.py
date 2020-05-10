@@ -40,6 +40,8 @@ def getShopee(keyword,page):
         resp = requests.get('https://shopee.co.id/api/v2/search_items/', headers=headers, params=params)
         json_data = json.loads(resp.text)
         items = json_data['items']
+        data_write = OrderedDict()
+        data_write['total'] = json_data['total']
         for item in items:
             images = item['images']
             item_rating = item['item_rating']
